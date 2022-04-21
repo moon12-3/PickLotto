@@ -1,6 +1,7 @@
 package com.example.today_quote
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -29,14 +30,21 @@ class MainActivity : AppCompatActivity() {
 
         var countIdx = 0
 
-        fun lotto() : String{
+        fun lotto() : String {
+            val iLottoList = Array(45) {0}
+            for(i in 0 until 45)
+                iLottoList[i] = i+1
+            for (i in 0 .. 44) {
+                var idx1 = Random().nextInt(45)
+                var idx2 = Random().nextInt(45)
+                var temp = iLottoList[idx1]
+                iLottoList[idx1] = iLottoList[idx2]
+                iLottoList[idx2] = temp
+            }
             var lottoNum = ""
-            var iLotto = Array(6) { 0 }
-            for (i in iLotto.indices) {
-                iLotto[i] = Random().nextInt(45) + 1
-                lottoNum += if (i == 5)
-                    "${iLotto[i]}"
-                else "${iLotto[i]}-"
+            for(i in 0 ..5) {
+                lottoNum += if(i==5) "${iLottoList[i]}"
+                else "${iLottoList[i]}-"
             }
             return lottoNum
         }
@@ -48,12 +56,19 @@ class MainActivity : AppCompatActivity() {
         makeBtn.setOnClickListener {
             lottoNum = lotto()
             lottoText.text = lottoNum
-            Toast.makeText(this, "새로운 로또 번호를 생성하였습니다!", Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this, "새로운 로또 번호를 생성하였습니다!", Toast.LENGTH_SHORT).show()
         }
 
         saveBtn.setOnClickListener {
-            Lotto.saveToPreferences(pref, countIdx++, lottoNum)
+            Lotto.saveToPreferences(pref, countIdx, lottoNum)
+            countIdx++
             Toast.makeText(this, "로또 번호가 저장되었습니다!", Toast.LENGTH_SHORT).show()
+        }
+
+        saveListBtn.setOnClickListener {
+            val intent = Intent(this, showSaveLotto::class.java)
+            intent.putExtra("lottoSize", lottoList.size)
+            startActivity(intent)
         }
     }
 }

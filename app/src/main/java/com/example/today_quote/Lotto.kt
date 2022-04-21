@@ -8,11 +8,10 @@ data class Lotto(var idx : Int, var lottoNum : String){
         var count = 0;
 
         fun saveToPreferences(pref: SharedPreferences, idx: Int, lottoNum: String): Lotto {
-            count++
+            count = idx+1
             var editor = pref.edit()
 
             editor.putString("${idx}.text", lottoNum)
-
             editor.apply()
 
             return Lotto(idx, lottoNum)
@@ -21,7 +20,7 @@ data class Lotto(var idx : Int, var lottoNum : String){
         fun getsLottoNumFromPreferences(pref: SharedPreferences) : MutableList<Lotto> {
             var lottoNumArray = mutableListOf<Lotto>()
 
-            for(idx in 0 .. count) {
+            for(idx in 0 until count) {
                 var lottoNum = pref.getString("${idx}.text", "")!!
                 lottoNumArray.add(Lotto(idx, lottoNum))
             }
