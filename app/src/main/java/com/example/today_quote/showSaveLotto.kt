@@ -9,7 +9,7 @@ class showSaveLotto : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_show_save_lotto)
 
-        var lottoSize = intent.getIntExtra("lottoSize", 0)
+        val lottoSize = intent.getIntExtra("size", 0)
 
         Toast.makeText(this, "${lottoSize}개의 로또 번호가 저장되어 있습니다.", Toast.LENGTH_SHORT).show()
     }

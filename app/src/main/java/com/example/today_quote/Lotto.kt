@@ -1,39 +1,31 @@
 package com.example.today_quote
 
+import android.content.Context
 import android.content.SharedPreferences
 import java.util.*
 
-data class Lotto(var idx : Int, var lottoNum : String){
-    companion object {
-        var count = 0;
 
-        fun saveToPreferences(pref: SharedPreferences, idx: Int, lottoNum: String): Lotto {
-            count = idx+1
-            var editor = pref.edit()
 
-            editor.putString("${idx}.text", lottoNum)
-            editor.apply()
+fun getLottoNumArray(ctx : Context) : MutableList<String> {
+    val pref = ctx.getSharedPreferences("lotto", Context.MODE_PRIVATE)
+    val lottoList = mutableListOf<String>()
+    var idx = pref.getInt("size", 0)
 
-            return Lotto(idx, lottoNum)
-        }
-
-        fun getsLottoNumFromPreferences(pref: SharedPreferences) : MutableList<Lotto> {
-            var lottoNumArray = mutableListOf<Lotto>()
-
-            for(idx in 0 until count) {
-                var lottoNum = pref.getString("${idx}.text", "")!!
-                lottoNumArray.add(Lotto(idx, lottoNum))
-            }
-
-            return lottoNumArray
-        }
-
-        fun removeLottNumFromPreferences(pref:SharedPreferences, idx:Int) {
-            val editor = pref.edit()
-
-            editor.remove("${idx}.text")
-
-            editor.apply()
-        }
+    for(i in 0 until idx) {
+       lottoList.add(pref.getString("$idx", "")!!)
     }
+
+    return lottoList
+}
+
+fun saveLottoNum(ctx : Context, lottoList : MutableList<String>) {
+    val pref = ctx.getSharedPreferences("lotto", Context.MODE_PRIVATE)
+    val editor = pref.edit()
+    var idx = 0;
+    for(i in lottoList) {
+        editor.putString("$idx", i)
+        idx++
+    }
+    editor.putInt("size", idx)
+    editor.apply()
 }
