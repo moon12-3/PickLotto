@@ -16,6 +16,8 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var pref : SharedPreferences
+
     private fun lotto() : String {
         val iLottoList = Array(45) {0}
         for(i in 0 until 45)
@@ -40,6 +42,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        pref = getSharedPreferences("lotto", Context.MODE_PRIVATE)
+
         val lottoText = findViewById<TextView>(R.id.lotto_text)
 
         lottoText.text = "로또 번호"
@@ -52,14 +56,13 @@ class MainActivity : AppCompatActivity() {
 
         val saveBtn = findViewById<Button>(R.id.save_btn)
         saveBtn.setOnClickListener {
-            val lottoList = getLottoNumArray(this)
+            val lottoList = getLottoNumArray(pref)
             lottoList.add(lottoText.text.toString())
-            saveLottoNum(this, lottoList)
+            saveLottoNum(pref, lottoList)
         }
 
         val saveListBtn = findViewById<Button>(R.id.save_list_btn)
         saveListBtn.setOnClickListener {
-            val pref = this.getSharedPreferences("lotto", Context.MODE_PRIVATE)
             val intent = Intent(this, showSaveLotto::class.java)
 
             intent.putExtra("size", pref.getInt("size", 0))
