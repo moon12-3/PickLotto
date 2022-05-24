@@ -9,6 +9,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class showSaveLotto : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,9 +24,15 @@ class showSaveLotto : AppCompatActivity() {
 
         val lottoList = getLottoNumArray(pref)
 
-        val layoutManager = LinearLayoutManager(this)
+        val layoutManager = LinearLayoutManager(this)   //GridLayoutManager
 
-//        val adapter = lottoAdapter(lottoList)
+        val adapter = lottoAdapter(lottoList, this)
 
+
+        val recyclerView = findViewById<RecyclerView>(R.id.lotto_list)
+
+        recyclerView.setHasFixedSize(false)
+        recyclerView.layoutManager = layoutManager
+        recyclerView.adapter = adapter
     }
 }
