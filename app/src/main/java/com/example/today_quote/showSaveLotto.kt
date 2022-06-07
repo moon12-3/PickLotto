@@ -26,7 +26,7 @@ class showSaveLotto : AppCompatActivity() {
 
         val layoutManager = LinearLayoutManager(this)   //GridLayoutManager
 
-        val adapter = lottoAdapter(lottoList, this)
+        val adapter = lottoAdapter(lottoList, pref)
 
 
         val recyclerView = findViewById<RecyclerView>(R.id.lotto_list)
