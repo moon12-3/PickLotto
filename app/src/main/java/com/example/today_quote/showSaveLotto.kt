@@ -3,6 +3,7 @@ package com.example.today_quote
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.util.TypedValue
 import android.widget.Adapter
 import android.widget.LinearLayout
@@ -23,6 +24,8 @@ class showSaveLotto : AppCompatActivity() {
         val pref = getSharedPreferences("lotto", Context.MODE_PRIVATE)
 
         val lottoList = getLottoNumArray(pref)
+
+        Log.d("my_tag", lottoList.toString())
 
         val layoutManager = LinearLayoutManager(this)   //GridLayoutManager
 

@@ -11,7 +11,7 @@ fun getLottoNumArray(pref : SharedPreferences) : MutableList<String> {
     var idx = pref.getInt("size", 0)
 
     for(i in 0 until idx) {
-       lottoList.add(pref.getString("$idx", "")!!)
+        lottoList.add(pref.getString("$i", "")!!)
     }
 
     return lottoList
