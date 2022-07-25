@@ -3,6 +3,7 @@ package com.example.today_quote
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -70,5 +71,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        val resultCheckBtn = findViewById<Button>(R.id.result_check_btn)
+        resultCheckBtn.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://m.dhlottery.co.kr/common.do?method=main"))
+            startActivity(intent)
+        }
     }
 }
